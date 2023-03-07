@@ -1,0 +1,11 @@
+server:
+  port: 8088
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: liming
+    password: liming
+    virtual-host: /liming
+    publisher-confirms: true
+    publisher-returns: true
