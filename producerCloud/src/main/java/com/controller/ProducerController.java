@@ -35,7 +35,7 @@ public class ProducerController {
         for (int i = 0; i < 10; i++) {
             String messageData = "test message, HelloWorld!:"+i;
             map.put("messageData",messageData);
-            //交换机 队列 消息
+            //交换机 队列/或者routingKey 消息
             rabbitTemplate.convertAndSend(null,"helloWorld",map);
         }
         return "ok";
