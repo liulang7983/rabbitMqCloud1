@@ -30,7 +30,7 @@ public class RabbitConfig {
 
             }
         });
-        //未发送到队列，无队列接收
+        //到了交换机但是未发送到队列，无队列接收
         rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {

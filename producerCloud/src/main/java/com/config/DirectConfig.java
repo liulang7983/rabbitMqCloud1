@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DirectConfig {
     
-  /*  @Bean
+    @Bean
     public Queue directQueueA(){
         return new Queue("directA",true);
     }
@@ -33,5 +33,5 @@ public class DirectConfig {
     @Bean
     public Binding directExchangeB(){
         return BindingBuilder.bind(directQueueB()).to(createDirectExchange()).with("directB");
-    }*/
+    }
 }

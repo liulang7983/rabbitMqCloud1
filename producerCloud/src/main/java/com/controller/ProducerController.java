@@ -114,4 +114,39 @@ public class ProducerController {
         }
         return "ok";
     }
+    @RequestMapping("/fanoutTest")
+    public String fanoutTest(){
+        String messageId = String.valueOf(UUID.randomUUID());
+
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String,Object> map=new HashMap<>();
+        map.put("messageId",messageId);
+
+        map.put("createTime",createTime);
+        for (int i = 0; i < 10; i++) {
+            String messageData = "test message, topic!:"+i;
+            map.put("messageData",messageData);
+            //交换机 队列(routingKey) 消息
+            rabbitTemplate.convertAndSend("liming_test","",map);
+        }
+        return "ok";
+    }
+
+    @RequestMapping("/fanoutExchangeTest2")
+    public String fanoutExchangeTest2(){
+        String messageId = String.valueOf(UUID.randomUUID());
+
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String,Object> map=new HashMap<>();
+        map.put("messageId",messageId);
+
+        map.put("createTime",createTime);
+        for (int i = 0; i < 10; i++) {
+            String messageData = "test message, fanout_exchange_test2!:"+i;
+            map.put("messageData",messageData);
+            //交换机 队列(routingKey) 消息
+            rabbitTemplate.convertAndSend("fanout_exchange_test2","",map);
+        }
+        return "ok";
+    }
 }
