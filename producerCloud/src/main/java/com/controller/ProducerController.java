@@ -4,7 +4,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -51,7 +50,7 @@ public class ProducerController {
 
         map.put("createTime",createTime);
         for (int i = 0; i < 10; i++) {
-            String messageData = "test message, HelloWorld!:"+i;
+            String messageData = "test message, workqueues!:"+i;
             map.put("messageData",messageData);
             //交换机 队列(routingKey) 消息
             rabbitTemplate.convertAndSend(null,"workqueues",map);
