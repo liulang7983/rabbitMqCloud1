@@ -24,16 +24,22 @@ public class RabbitConfig {
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData, boolean b, String s) {
+                if (!b){
+                    System.out.println("未发送到交换机");
+                }else {
+                    System.out.println("发送成功");
+                }
                 System.out.println("ConfirmCallback数据："+correlationData);
                 System.out.println("ConfirmCallback情况："+b);
                 System.out.println("ConfirmCallback原因："+s);
-
+                System.out.println();
             }
         });
         //到了交换机但是未发送到队列，无队列接收
         rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+                System.out.println("到了交换机但是未发送到队列，无队列接收");
                 System.out.println("ReturnCallback:     "+"消息："+message);
                 System.out.println("ReturnCallback:     "+"回应码："+replyCode);
                 System.out.println("ReturnCallback:     "+"回应信息："+replyText);
