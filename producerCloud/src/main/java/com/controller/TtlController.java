@@ -31,7 +31,7 @@ public class TtlController {
 
         map.put("createTime", createTime);
         for (int i = 0; i < 10; i++) {
-            String messageData = "test message, HelloWorld!:" + i;
+            String messageData = "test message, ttl!:" + i;
             map.put("messageData", messageData);
             //交换机 队列(routingKey) 消息
             rabbitTemplate.convertAndSend("liming_exchange_ttl", "", map);
@@ -47,7 +47,7 @@ public class TtlController {
         map.put("messageId", messageId);
         map.put("createTime", createTime);
         for (int i = 0; i < 10; i++) {
-            String messageData = "test message, HelloWorld!:" + i;
+            String messageData = "test message, sixinout!:" + i;
             map.put("messageData", messageData);
             //交换机 队列(routingKey) 消息
             rabbitTemplate.convertAndSend("liming_sixinout", "", map);
