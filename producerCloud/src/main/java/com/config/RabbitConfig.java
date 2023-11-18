@@ -27,7 +27,7 @@ public class RabbitConfig {
                 if (!b){
                     System.out.println("未发送到交换机");
                 }else {
-                    System.out.println("发送成功");
+                    System.out.println("成功发送到交换机");
                 }
                 System.out.println("ConfirmCallback数据："+correlationData);
                 System.out.println("ConfirmCallback情况："+b);
