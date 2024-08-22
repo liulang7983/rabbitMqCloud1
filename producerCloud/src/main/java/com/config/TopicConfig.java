@@ -42,6 +42,7 @@ public class TopicConfig {
 
     //将secondQueue和topicExchange绑定,而且绑定的键值为用上通配路由键规则topic.#
     // 这样只要是消息携带的路由键是以topic.开头,都会分发到该队列
+    //没有指定规则则是和direct一样，全值匹配
     @Bean
     Binding bindingExchangeMessage2() {
         return BindingBuilder.bind(secondQueue()).to(exchange()).with("topic.#");

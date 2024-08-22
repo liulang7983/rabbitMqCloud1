@@ -20,6 +20,7 @@ public class HelloWorldListener {
     @RabbitHandler
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("HelloWorldListener消费者收到消息  : " + testMessage.toString());
+        System.out.println("索引:"+deliveryTag);
         channel.basicAck(deliveryTag,true);
     }
 

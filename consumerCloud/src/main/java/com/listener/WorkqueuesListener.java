@@ -17,9 +17,17 @@ import java.util.Map;
 @Component
 @RabbitListener(queues = "workqueues")
 public class WorkqueuesListener {
+    //发送三十个消息不管消费能力，均分给了两个消费者
     @RabbitHandler
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("WorkqueuesListener消费者收到消息  : " + testMessage.toString());
+      /*  try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        channel.basicQos(1);
+        System.out.println("索引:"+deliveryTag);
         channel.basicAck(deliveryTag,true);
     }
 

@@ -49,7 +49,7 @@ public class ProducerController {
         map.put("messageId",messageId);
 
         map.put("createTime",createTime);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             String messageData = "test message, workqueues!:"+i;
             map.put("messageData",messageData);
             //交换机 队列(routingKey) 消息
@@ -75,8 +75,8 @@ public class ProducerController {
         }
         return "ok";
     }
-
-    @RequestMapping("/driect")
+    //完全匹配
+    @RequestMapping("/direct")
     public String Direct(@RequestBody Map<String,String> hashMap){
         System.out.println(hashMap.get("str"));
         String messageId = String.valueOf(UUID.randomUUID());
