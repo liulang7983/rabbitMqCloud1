@@ -18,6 +18,8 @@ spring:
     listener:
       simple:
         acknowledge-mode: manual #手动签收
+        #每次取一个消息，不然设置了超时也没用还是会消费
+        prefetch: 1
       retry:
         max-attempts: 1 #重试次数
         enabled: false #开启重试
