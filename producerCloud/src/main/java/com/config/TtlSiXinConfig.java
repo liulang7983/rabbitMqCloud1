@@ -41,7 +41,7 @@ public class TtlSiXinConfig {
         //声明当前队列绑定的死信交换机
         args.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
         //声明当前队列的死信路由 key
-        args.put("x-dead-letter-routing-key", "YD");
+        args.put("x-dead-letter-routing-key", "XA");
         //声明队列的 TTL
         args.put("x-message-ttl", 10000);
         return QueueBuilder.durable(QUEUE_A).withArguments(args).build();
@@ -61,7 +61,7 @@ public class TtlSiXinConfig {
         //声明当前队列绑定的死信交换机
         args.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
         //声明当前队列的死信路由 key
-        args.put("x-dead-letter-routing-key", "YD");
+        args.put("x-dead-letter-routing-key", "XD");
         //声明队列的 TTL
         args.put("x-message-ttl", 40000);
         return QueueBuilder.durable(QUEUE_B).withArguments(args).build();
@@ -74,17 +74,28 @@ public class TtlSiXinConfig {
         return BindingBuilder.bind(queue1B).to(xExchange).with("XB");
     }
 
-    //声明死信队列 QD
-    @Bean("queueD")
-    public Queue queueD() {
-        return new Queue(DEAD_LETTER_QUEUE);
+    //声明死信队列 XB
+    @Bean("queueXB")
+    public Queue queueXB() {
+        return new Queue("YB");
+    }
+    //声明死信队列 XA
+    @Bean("queueXA")
+    public Queue queueXA() {
+        return new Queue("XA");
     }
 
-    //声明死信队列 QD 绑定关系
+    //声明死信队列 YB 绑定关系
     @Bean
-    public Binding deadLetterBindingQAD(@Qualifier("queueD") Queue queueD,
+    public Binding deadLetterBindingYB(@Qualifier("queueXB") Queue queueD,
                                         @Qualifier("yExchange") DirectExchange yExchange) {
-        return BindingBuilder.bind(queueD).to(yExchange).with("YD");
+        return BindingBuilder.bind(queueD).to(yExchange).with("XB");
+    }
+    //声明死信队列 XA 绑定关系
+    @Bean
+    public Binding deadLetterBindingYA(@Qualifier("queueXA") Queue queueD,
+                                        @Qualifier("yExchange") DirectExchange yExchange) {
+        return BindingBuilder.bind(queueD).to(yExchange).with("XA");
     }
 
 }

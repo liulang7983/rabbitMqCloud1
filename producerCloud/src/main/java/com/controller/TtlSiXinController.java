@@ -35,7 +35,8 @@ public class TtlSiXinController {
             String messageData = "test message, ttlSiXin!:" + i;
             map.put("messageData", messageData);
             //交换机 队列(routingKey) 消息
-            rabbitTemplate.convertAndSend(TtlSiXinConfig.X_EXCHANGE, "XA", "ttl十秒的");
+            map.put("yyy","ttl十秒的");
+            rabbitTemplate.convertAndSend(TtlSiXinConfig.X_EXCHANGE, "XA", map);
             rabbitTemplate.convertAndSend(TtlSiXinConfig.X_EXCHANGE, "XB", "ttl四十秒的");
         }
         return "ok";
