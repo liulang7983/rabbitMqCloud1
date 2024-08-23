@@ -26,7 +26,10 @@ public class TopicConfig {
     public Queue secondQueue() {
         return new Queue("topicB");
     }
-
+    @Bean
+    public Queue QueueD() {
+        return new Queue("topicD");
+    }
     @Bean
     TopicExchange exchange() {
         return new TopicExchange("topicExchange");
@@ -46,6 +49,13 @@ public class TopicConfig {
     @Bean
     Binding bindingExchangeMessage2() {
         return BindingBuilder.bind(secondQueue()).to(exchange()).with("topic.#");
+    }
+
+    //此topic.*时只能绑定topic.xx这种，如归是topic.xx.xx则不会匹配
+    //没有指定规则则是和direct一样，全值匹配
+    @Bean
+    Binding bindingExchangeMessage3() {
+        return BindingBuilder.bind(QueueD()).to(exchange()).with("topic.*");
     }
 
 }
