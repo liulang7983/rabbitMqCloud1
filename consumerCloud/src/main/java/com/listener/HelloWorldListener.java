@@ -21,7 +21,8 @@ public class HelloWorldListener {
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("HelloWorldListener消费者收到消息  : " + testMessage.toString());
         System.out.println("索引:"+deliveryTag);
-        channel.basicAck(deliveryTag,true);
+        //第二个参数代表是否确认比我小的索引的消息，为false是指确认自己，不盲目提交其他可能在正在处理的索引
+        channel.basicAck(deliveryTag,false);
     }
 
 }
