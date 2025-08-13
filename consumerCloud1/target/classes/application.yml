@@ -7,3 +7,19 @@ spring:
     username: liming
     password: liming
     virtual-host: /liming
+    #加了以后每次启动消费一个，消息积压
+    #    listener:
+    #      simple:
+    #        acknowledge-mode: manual #手动签收
+    #        prefetch: 1 #每次从队列中取一个,轮询分发，默认是公平分发
+    #        retry:
+    #          max-attempts: 1 #重试次数
+    #          enabled: true #开启重试
+    listener:
+      simple:
+        acknowledge-mode: manual #手动签收
+        #每次取一个消息，不然设置了超时也没用还是会消费
+        prefetch: 1
+      retry:
+        max-attempts: 1 #重试次数
+        enabled: false #开启重试

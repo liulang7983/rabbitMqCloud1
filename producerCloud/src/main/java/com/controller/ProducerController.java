@@ -57,7 +57,7 @@ public class ProducerController {
         }
         return "ok";
     }
-
+    //广播模式
     @RequestMapping("/fanout")
     public String Fanout(){
         String messageId = String.valueOf(UUID.randomUUID());

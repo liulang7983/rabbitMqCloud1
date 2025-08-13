@@ -17,6 +17,7 @@ import java.util.Map;
 @Component
 @RabbitListener(queues = "fanoutC")
 public class FanoutCListener {
+    //c此时定义的SimpleMessageListenerContainer也监听了fanoutC，所以此时他的消息类似于workqueues
     @RabbitHandler
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("FanoutCListener消费者收到消息  : " + testMessage.toString());
