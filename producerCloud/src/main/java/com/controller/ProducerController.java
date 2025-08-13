@@ -123,7 +123,7 @@ public class ProducerController {
 
         map.put("createTime",createTime);
         for (int i = 0; i < 10; i++) {
-            String messageData = "test message, topic!:"+i;
+            String messageData = "test message, liming_test!:"+i;
             map.put("messageData",messageData);
             //交换机 队列(routingKey) 消息
             rabbitTemplate.convertAndSend("liming_test","",map);

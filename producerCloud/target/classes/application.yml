@@ -7,5 +7,5 @@ spring:
     username: liming
     password: liming
     virtual-host: /liming
-    publisher-confirms: true
+    publisher-confirm-type: correlated  # 必须开启确认机制
     publisher-returns: true

@@ -52,7 +52,7 @@ public class ConfirmOrRetrunController {
         return "ok";
     }
 
-    //消息推送到server，找到交换机了，但是没找到队列
+    //消息推送到server，找到交换机了，同时找到队列
     @RequestMapping("/inQueue")
     public String inQueue(){
         String messageId = String.valueOf(UUID.randomUUID());

@@ -1,6 +1,10 @@
 package com.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.config.MessageCorrelationData;
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.rabbit.connection.Connection;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class OrderController {
     @Autowired
     RabbitTemplate rabbitTemplate;
+    @Autowired
+    private ConnectionFactory connectionFactory;
 
     @RequestMapping("/helloWorld")
     public String HelloWorld(){
@@ -81,6 +87,35 @@ public class OrderController {
                 // 可以根据业务需求决定是否重试或跳过
             }
             System.out.println(correlationData.isFailed());
+        }
+        return "ok";
+    }
+    @RequestMapping("/channelOrder")
+    public String channelOrder()throws Exception{
+        String messageId = String.valueOf(UUID.randomUUID());
+        Connection connection = connectionFactory.createConnection();
+        Channel channel = connection.createChannel(false);
+        channel.confirmSelect();
+        for (int i = 0; i < 10; i++) {
+            long l = System.currentTimeMillis();
+            String str="时间戳为:"+l+",发送序号为:"+i;
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("messageId",messageId);
+            jsonObject.put("createTime",l);
+            String messageData = "test message, helloWorldOrder!:"+i;
+            jsonObject.put("messageData",messageData);
+            // 发送消息
+            channel.basicPublish("", "helloWorldOrder", null, jsonObject.toString().getBytes());
+            System.out.println("发送消息：" + jsonObject);
+
+            // 同步等待Broker确认（阻塞当前线程，直到收到确认）
+            boolean confirmed = channel.waitForConfirms();
+            if (confirmed) {
+                System.out.println("消息已被Broker确认接收：" + jsonObject);
+            } else {
+                System.err.println("消息未被Broker确认，终止发送");
+                return "ok";
+            }
         }
         return "ok";
     }
