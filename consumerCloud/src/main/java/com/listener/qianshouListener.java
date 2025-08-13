@@ -62,15 +62,14 @@ public class qianshouListener {
                 // long deliveryTag, boolean multiple, boolean requeue
                 channel.basicNack(deliveryTag,false,false);
 
-
+                //第一个参数为本管道的唯一序号，第二个参数是是否放回本序号
                 //放回消息队列 第二个参数，true会重新放回队列，所以需要自己根据业务逻辑判断什么时候使用拒绝
                 //此时会导致死循环一直丢回队列一直重新消费，一般是可以加入在后面数据库啥的，设置重试次数count，
                 //三次后把参数写入到数据库,然后签收，后续人为分析优化代码或者人为处理。或者进入死信队列
                 //channel.basicReject(deliveryTag,true);
-                /*channel.basicNack和channel.basicReject的区别在于前者的multiple可以否定比他小的本管道的全部序号
+                /*channel.basicNack和channel.basicReject的区别在于前者的multiple可以否定比他小的本管道的全部序号，后者只否定自己
                 * 如果是channel.basicNack(deliveryTag,false,true)和channel.basicReject(deliveryTag,true)则效果一致
                 * */
-
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }

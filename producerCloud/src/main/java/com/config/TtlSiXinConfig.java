@@ -87,15 +87,15 @@ public class TtlSiXinConfig {
 
     //声明死信队列 YB 绑定关系
     @Bean
-    public Binding deadLetterBindingYB(@Qualifier("queueXB") Queue queueD,
+    public Binding deadLetterBindingYB(@Qualifier("queueXB") Queue queueXB,
                                         @Qualifier("yExchange") DirectExchange yExchange) {
-        return BindingBuilder.bind(queueD).to(yExchange).with("XB");
+        return BindingBuilder.bind(queueXB).to(yExchange).with("XB");
     }
     //声明死信队列 XA 绑定关系
     @Bean
-    public Binding deadLetterBindingYA(@Qualifier("queueXA") Queue queueD,
+    public Binding deadLetterBindingYA(@Qualifier("queueXA") Queue queueXA,
                                         @Qualifier("yExchange") DirectExchange yExchange) {
-        return BindingBuilder.bind(queueD).to(yExchange).with("XA");
+        return BindingBuilder.bind(queueXA).to(yExchange).with("XA");
     }
 
 }

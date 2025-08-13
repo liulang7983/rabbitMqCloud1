@@ -25,7 +25,7 @@ public class TtlConfig {
         Queue queue = new Queue("ttl_queue",true,false,false,arguments);
         return queue;
     }
-    //床架交换机
+    //创建交换机
     @Bean
     public FanoutExchange createttlExchange(){
         return new FanoutExchange("liming_exchange_ttl",true,true);

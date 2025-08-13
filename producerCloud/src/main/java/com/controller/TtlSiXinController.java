@@ -41,4 +41,23 @@ public class TtlSiXinController {
         }
         return "ok";
     }
+    @RequestMapping("/ttlAndSiXin")
+    public String ttlAndSiXin() {
+        String messageId = String.valueOf(UUID.randomUUID());
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String, Object> map = new HashMap<>();
+        map.put("messageId", messageId);
+
+        map.put("createTime", createTime);
+        for (int i = 0; i < 10; i++) {
+            String messageData = "test message, ttlExchange!:" + i;
+            map.put("messageData", messageData);
+            //交换机 队列(routingKey) 消息
+            map.put("yyy","ttl十秒的");
+            rabbitTemplate.convertAndSend("ttlExchange", "ttlQueueA", map);
+            map.put("yyy","ttl四十秒的");
+            rabbitTemplate.convertAndSend("ttlExchange", "ttlQueueB", map);
+        }
+        return "ok";
+    }
 }
