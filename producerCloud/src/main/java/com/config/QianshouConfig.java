@@ -1,8 +1,11 @@
 package com.config;
 
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ming.li
