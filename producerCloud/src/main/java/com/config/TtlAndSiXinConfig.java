@@ -54,7 +54,7 @@ public class TtlAndSiXinConfig {
         Map<String, Object> args = new HashMap<>(3);
         //声明当前队列绑定的死信交换机
         args.put("x-dead-letter-exchange", "deadExchange");
-        //声明当前队列的死信路由 key
+        //声明当前队列的死信路由 key，进而由死信交换机分发
         args.put("x-dead-letter-routing-key", "deadQueueB");
         //声明队列的 TTL
         args.put("x-message-ttl", 40000);
