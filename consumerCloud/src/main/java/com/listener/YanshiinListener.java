@@ -19,7 +19,7 @@ import java.util.Map;
 public class YanshiinListener {
     //设置x-message-ttl为10秒，此时设置了spring.rabbitmq.listener.simple.prefetch=1每次拉取一个消息，
     // 此时自己会消费四个，其余的超时跑到死信队列死信队列自己消费了
-    //如果没设置那么可能每次拉取的数据可能很多，此时这些消息肯呢个是已经超时的，但是在已拉取的消费队列里，所以不会超时去死信队列
+    //如果没设置那么可能每次拉取的数据可能很多，此时这些消息第四个是已经超时的，但是在已拉取的消费队列里，所以不会超时去死信队列
     @RabbitHandler
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("yanshiinListener消费者收到消息  : " + testMessage.toString());
@@ -29,7 +29,7 @@ public class YanshiinListener {
             e.printStackTrace();
         }
         channel.basicQos(1);
-        channel.basicAck(deliveryTag,true);
+        channel.basicAck(deliveryTag,false);
     }
 
 }

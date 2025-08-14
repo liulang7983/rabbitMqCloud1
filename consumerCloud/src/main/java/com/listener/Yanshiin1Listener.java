@@ -23,12 +23,22 @@ public class Yanshiin1Listener {
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("yanshiin1Listener消费者收到消息  : " + testMessage.toString());
         //channel.basicQos(1);
+        /**
+         * 有异常就绝收消息
+         * basicNack(long deliveryTag, boolean multiple, boolean requeue)
+         * multiple:true否定所有 deliveryTag 小于等于当前消息 deliveryTag 的未确认消息（即批量处理之前未确认的消息）
+         *          false仅否定确认当前 deliveryTag 对应的这一条消息
+         * requeue:true为将消息重返当前消息队列,还可以重新发送给消费者;
+         *         false:将消息丢弃或者放进死信队列
+         */
         // long deliveryTag, boolean multiple, boolean requeue
-        channel.basicNack(deliveryTag,false,true);
+        channel.basicNack(deliveryTag,false,false);
+
+
         //放回消息队列 第二个参数，true会重新放回队列，所以需要自己根据业务逻辑判断什么时候使用拒绝
         //此时会导致死循环一直丢回队列一直重新消费，一般是可以加入在后面数据库啥的，设置重试次数count，
         //三次后把参数写入到数据库,然后签收，后续人为分析优化代码或者人为处理
-        channel.basicReject(deliveryTag,true);
+        //channel.basicReject(deliveryTag,true);
     }
 
 }

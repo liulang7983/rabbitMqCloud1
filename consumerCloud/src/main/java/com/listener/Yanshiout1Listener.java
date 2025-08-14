@@ -21,7 +21,7 @@ public class Yanshiout1Listener {
     @RabbitHandler
     public void process(Map testMessage, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         System.out.println("yanshiout1Listener死信队列消费者收到消息  : " + testMessage.toString());
-        channel.basicAck(deliveryTag,true);
+        channel.basicAck(deliveryTag,false);
     }
 
 }
